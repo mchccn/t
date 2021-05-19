@@ -1,6 +1,6 @@
-(function () {
+(function() {
     const parser = new DOMParser();
-    
+
     const sub = Symbol("internal");
     const set = Symbol("internal");
 
@@ -63,7 +63,7 @@
             this.#el = el;
             this.#html = html;
             this.#vals = vals;
-            
+
             [...this.#vals.entries()].forEach(([k, v]) => {
                 v.__sub__((o, n) => {
                     if (!this.isFrozen) this.render();
@@ -74,7 +74,7 @@
         get isFrozen() {
             return this.#frozen;
         }
-    
+
         get rendered() {
             return this.#el.innerHTML;
         }
@@ -93,13 +93,13 @@
 
         render() {
             this.#el.innerHTML = "";
-            
+
             this.#el.append(...parser.parseFromString([...this.#vals.entries()].reduce(
                 (t, [k, v]) =>
-                    t.replace(
-                        new RegExp(`\\{\\{\\s*${k}\\s*\\}\\}`, `g`),
-                        v.valueOf()
-                    ),
+                t.replace(
+                    new RegExp(`\\{\\{\\s*${k}\\s*\\}\\}`, `g`),
+                    v.valueOf()
+                ),
                 this.#html
             ), "text/html").body.childNodes);
 
@@ -117,8 +117,7 @@
         const deps = [
             ...new Set(
                 Array.from(
-                    html.match(/\{\{\s*([$a-zA-Z_][$a-zA-Z0-9_]*)\s*\}\}/g) ??
-                        []
+                    html.match(/\{\{\s*([$a-zA-Z_][$a-zA-Z0-9_]*)\s*\}\}/g) ?? []
                 ).map((m) => m.slice(2, -2).trim())
             )
         ];
@@ -144,17 +143,24 @@
         return [state, (v) => void state.__set__(v, sub)];
     }
 
-    globalThis.Templates = { render, useState };
+    globalThis.Templates = {
+        render,
+        useState
+    };
 })();
 
 /* It works! */
 
-const { render, useState } = Templates;
+const {
+    render,
+    useState
+} = Templates;
 
 const [counter, setCounter] = useState(0);
 
 render(
     document.getElementById("test"),
-    `<button onclick="setCounter(counter + 1)">Clicked {{ counter }} times!</button>`,
-    { counter }
+    `<button onclick="setCounter(counter + 1)">Clicked {{ counter }} times!</button>`, {
+        counter
+    }
 );
