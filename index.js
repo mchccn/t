@@ -148,19 +148,3 @@
         useState
     };
 })();
-
-/* It works! */
-
-const {
-    render,
-    useState
-} = Templates;
-
-const [counter, setCounter] = useState(0);
-
-render(
-    document.getElementById("test"),
-    `<button onclick="setCounter(counter + 1)">Clicked {{ counter }} times!</button>`, {
-        counter
-    }
-);
