@@ -30,7 +30,7 @@
 
 # @cursorsdottsx/t
 
-Ok, what's another templating library doing? Well thanks for asking. 
+Ok, what's another templating library doing? Well thanks for asking.
 This one is a templating library that is stateful and totally does not copy React. Totally. 100%.
 
 ```js
@@ -38,25 +38,21 @@ const { render, useState } = Templates;
 
 const [counter, setCounter] = useState(0);
 
-render(
-    document.getElementById("test"),
-    `<button onclick="setCounter(counter + 1)">Clicked {{ counter }} times!</button>`,
-    { counter }
-);
+render(document.getElementById("test"), `<button onclick="setCounter(counter + 1)">Clicked {{ counter }} times!</button>`, { counter });
 ```
 
 Well to be fair the templating part is Vue-ish, and what's more is that this library is under 150 lines!
 
 #### Usage
 
-Import the library however you wish, then use the global `Templates` object like in the example.
+Import the library however you wish, then use the `Templates` object like in the example.
 
 ```js
-require("@cursorsdottsx/t");
+const Templates = require("@cursorsdottsx/t");
 ```
 
 ```js
-import "@cursorsdottsx/t";
+import Templates from "@cursorsdottsx/t";
 ```
 
 **WARNING: THIS LIBRARY DOES NOT PREVENT XSS IM TOO LAZY TO DO THAT**
